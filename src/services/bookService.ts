@@ -206,3 +206,17 @@ export const returnBook = (id: string): Book => {
 export const getRecommendations = (): Book[] => {
     return books.slice(0, 3);
 };
+
+// Adds availability status for books
+export const getBookAvailability = (id: string): { id: string, title: string, isAvailable: boolean } | null => {
+    const book = books.find(b => b.id === id);
+    if (!book) {
+        return null;
+    }
+
+    return {
+        id: book.id,
+        title: book.title,
+        isAvailable: !book.isBorrowed,  // If the book is not borrowed, it is available
+    };
+};
