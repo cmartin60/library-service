@@ -96,3 +96,21 @@ export const getRecommendations = (req: Request, res: Response): void => {
         res.status(500).json({ message: "Error fetching recommendations" });
     }
 };
+
+export const getBookById = (req: Request, res: Response): void => {
+    try {
+        const { id } = req.params;
+        const availability = bookService.getBookAvailability(id);
+
+        if (availability) {
+            res.status(200).json({
+                message: "Book availability status",
+                data: availability,
+            });
+        } else {
+            res.status(404).json({message: "Book not found",});
+        }
+    } catch (error) {
+        res.status(500).json({ message: "Error retrieving availability status" });
+    }
+};
