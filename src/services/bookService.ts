@@ -94,6 +94,20 @@ export const updateBook = (id: string, bookData: Partial<Book>): Book => {
         throw new Error(`Book with ID ${id} not found`);
     }
 
+    // Validate the input fields
+    if (bookData.title && typeof bookData.title !== 'string') {
+        throw new Error('Title must be a string');
+    }
+    if (bookData.author && typeof bookData.author !== 'string') {
+        throw new Error('Author must be a string');
+    }
+    if (bookData.genre && typeof bookData.genre !== 'string') {
+        throw new Error('Genre must be a string');
+    }
+    if (bookData.publishedDate && isNaN(Date.parse(bookData.publishedDate as string))) {
+        throw new Error('Invalid date format for publishedDate');
+    }
+
     // Create a safe version of bookData without protected fields
     const safeUpdate = { ...bookData };
 
